@@ -1,12 +1,12 @@
 {
-  "name": "Dev.to global keyboard navigation",
-  "version": "0.0.1",
-  "description": "Global keyboard navigation for dev.to",
+  "name": "Dev.to global keyboard shortcuts",
+  "version": "0.1.0",
+  "description": "Global keyboard shortcuts for dev.to",
   "manifest_version": 2,
-  "permissions": ["storage"],
+  "permissions": ["https://dev.to/*", "activeTab"],
   "content_scripts": [
     {
-      "matches": ["https://dev.to/*", "activeTab"],
+      "matches": ["https://dev.to/*"],
       "js": ["keyboard.js"],
       "css": ["keyboard.css"],
       "run_at": "document_start"
