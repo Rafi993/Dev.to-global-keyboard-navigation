@@ -97,7 +97,7 @@ document.addEventListener("keydown", (event) => {
   if (event.altKey) {
     switch (event.key) {
       case "h":
-        navigateTo("/listings");
+        navigateTo("/");
         return;
       case "l":
         navigateTo("/listings");
