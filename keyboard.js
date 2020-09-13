@@ -13,6 +13,13 @@ const closeModal = () => {
   }
 };
 
+const closeCommandView = () => {
+  const modal = document.getElementById("commandView");
+  if (modal) {
+    modal.remove();
+  }
+};
+
 const toggleModal = () => {
   const route = getPath();
   const modal = document.getElementById("modal");
@@ -46,7 +53,10 @@ const toggleModal = () => {
       </li>
       <li>
       <kbd>Alt</kbd> + <kbd>v</kbd> <span>View videos</span>
-     </li>
+      </li>
+      <li>
+        <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>p</kbd> <span>Command menu</span>
+      </li>
     </ul>
 `;
 
@@ -86,6 +96,80 @@ const navigateTo = (path) => {
   window.location.href = window.location.origin + path;
 };
 
+const clickElement = (query) => {
+  document.querySelector(query).click();
+};
+
+const commands = [
+  {
+    title: "Go to home",
+    command: "goToHome",
+  },
+  {
+    title: "View listing",
+    command: "goToListing",
+  },
+  {
+    title: "Show keyboard shortcuts",
+    command: "showKeyboard",
+  },
+  {
+    title: "View notifications",
+    command: "goToNotifications",
+  },
+  {
+    title: "Wrote new post",
+    command: "goToNewPost",
+  },
+  {
+    title: "View reading list",
+    command: "goToReadingList",
+  },
+  {
+    title: "View tags",
+    command: "goToTags",
+  },
+  {
+    title: "View videos",
+    command: "goToVideos",
+  },
+  {
+    title: "Save post",
+    command: "savePost",
+  },
+  {
+    title: "Preview post",
+    command: "previewPost",
+  },
+  {
+    title: "Reset post",
+    command: "clearPost",
+  },
+];
+
+const showCommandView = () => {
+  // Show command view if it is not shown before
+  if (!document.getElementById("commandView")) {
+    const commandView = document.createElement("div");
+    commandView.id = "commandView";
+    document.documentElement.appendChild(commandView);
+    console.log(document.getElementsByTagName("body"));
+    commandView.innerHTML = `
+      <input type="search" id="search-command" placeholder="Search for what commands" autofocus />
+      <ul>
+        ${commands
+          .map((command) => {
+            return `<li onclick="executeCommand(${command.command})">${command.title}</li>`;
+          })
+          .join("")}
+      </ul>
+  `;
+  }
+
+  // Focus on the search
+  document.getElementById("search-command").focus();
+};
+
 keyboardButton.innerText = "⌨";
 keyboardButton.addEventListener("click", () => {
   // Toggle modal state when keyboard button is clicked
@@ -96,38 +180,94 @@ keyboardButton.classList.add("keyboardMenu");
 
 document.documentElement.appendChild(keyboardButton);
 
+const executeCommand = (command) => {
+  switch (command) {
+    case "goToHome":
+      navigateTo("/");
+      break;
+    case "goToListing":
+      navigateTo("/listings");
+      break;
+    case "showKeyboard":
+      toggleModal();
+      break;
+    case "goToNotifications":
+      navigateTo("/notifications");
+      break;
+    case "goToNewPost":
+      navigateTo("/new");
+      break;
+    case "goToReadingList":
+      navigateTo("/readinglist");
+      break;
+    case "goToTags":
+      navigateTo("/tags");
+      break;
+    case "goToVideos":
+      navigateTo("/videos");
+      break;
+    case "commandView":
+      closeModal();
+      showCommandView();
+      break;
+    case "savePost":
+      clickElement(
+        ".crayons-btn.crayons-btn--ghost.crayons-btn--s.whitespace-nowrap.fw-normal"
+      );
+      break;
+    case "previewPost":
+      clickElement(
+        "#article-form > div.crayons-article-form__header > div.crayons-article-form__tabs.crayons-tabs.ml-auto > button.crayons-tabs__item.false"
+      );
+      break;
+    case "clearPost":
+      clickElement(
+        ".crayons-btn.crayons-btn--ghost.crayons-btn--s.whitespace-nowrap.fw-normal"
+      );
+      break;
+    default:
+      break;
+  }
+};
+
 // Handle all keyboard events
 document.addEventListener("keydown", (event) => {
   // Common keys
   if (event.key === "Escape") {
     closeModal();
+    closeCommandView();
+  }
+
+  if (event.ctrlKey && event.shiftKey && event.key === "P") {
+    event.preventDefault();
+    executeCommand("commandView");
   }
 
   if (event.altKey) {
     switch (event.key) {
       case "h":
-        navigateTo("/");
+        executeCommand("goToHome");
         return;
       case "l":
-        navigateTo("/listings");
+        executeCommand("goToListing");
         return;
       case "m":
-        toggleModal();
+        executeCommand("showKeyboard");
         return;
       case "n":
-        navigateTo("/notifications");
+        executeCommand("goToNotifications");
         return;
       case "w":
-        navigateTo("/new");
+        executeCommand("goToNewPost");
         return;
       case "r":
-        navigateTo("/readinglist");
+        executeCommand("goToReadingList");
         return;
       case "t":
-        navigateTo("/tags");
+        executeCommand("goToTags");
         return;
       case "v":
-        navigateTo("/videos");
+        executeCommand("goToVideos");
         return;
       default:
         break;
@@ -140,21 +280,13 @@ document.addEventListener("keydown", (event) => {
     if (event.altKey) {
       switch (event.key) {
         case "c":
-          document
-            .querySelector(
-              ".crayons-btn.crayons-btn--ghost.crayons-btn--s.whitespace-nowrap.fw-normal"
-            )
-            .click();
+          executeCommand("clearPost");
           break;
         case "s":
-          document.querySelector(".crayons-btn.mr-2.whitespace-nowrap").click();
+          executeCommand("savePost");
           break;
         case "p":
-          document
-            .querySelector(
-              "#article-form > div.crayons-article-form__header > div.crayons-article-form__tabs.crayons-tabs.ml-auto > button.crayons-tabs__item.false"
-            )
-            .click();
+          executeCommand("previewPost");
           break;
         default:
           break;

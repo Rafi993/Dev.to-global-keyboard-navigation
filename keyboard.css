@@ -6,7 +6,8 @@
   color: #000;
 }
 
-#modal {
+#modal,
+#commandView {
   position: fixed;
   z-index: 10;
   background-color: #fff;
@@ -14,6 +15,32 @@
   padding: 9px 24px;
   left: 40%;
   top: 9%;
+}
+
+#commandView {
+  padding: 4px 14px;
+  padding-top: 10px;
+  min-width: 347px;
+}
+
+#commandView ul {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+  margin-top: 4px;
+}
+
+#commandView ul li {
+  padding: 2px 8px;
+  cursor: pointer;
+}
+
+#commandView input {
+  width: 100%;
+}
+
+#commandView ul li:hover {
+  background-color: #ccc;
 }
 
 .keyboard-shortcuts {
