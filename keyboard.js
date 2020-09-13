@@ -64,13 +64,13 @@ const toggleModal = () => {
          <h3>Post</h3>
          <ul class="keyboard-shortcuts">
           <li>
-           <kbd>Ctrl</kbd> + <kbd>c</kbd><span> Revet changes</span>
+           <kbd>Alt</kbd> + <kbd>c</kbd><span> Revet changes</span>
           </li>
           <li>
-           <kbd>Ctrl</kbd> + <kbd>s</kbd><span> Save Changes</span>
+           <kbd>Alt</kbd> + <kbd>s</kbd><span> Save Changes</span>
           </li>
           <li>
-          <kbd>Ctrl</kbd> + <kbd>p</kbd><span> View preview</span>
+          <kbd>Alt</kbd> + <kbd>p</kbd><span> View preview</span>
          </li>
          </ul>
         `;
