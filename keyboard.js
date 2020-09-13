@@ -30,7 +30,7 @@ const toggleModal = () => {
         <kbd>Alt</kbd> + <kbd>l</kbd><span>Navigate to listing</span>
       </li>
       <li>
-       <kbd>Alt</kbd> + <kbd>m</kbd> <span>Toggle keyboard shortcuts modal</span>
+       <kbd>Alt</kbd> + <kbd>m</kbd> <span>Toggle keyboard shortcuts</span>
       </li>
       <li>
        <kbd>Alt</kbd> + <kbd>n</kbd> <span>View notifications</span>
