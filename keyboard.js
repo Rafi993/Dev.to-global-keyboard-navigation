@@ -6,6 +6,13 @@ const getPath = () => {
   }
 };
 
+const closeModal = () => {
+  const modal = document.getElementById("modal");
+  if (modal) {
+    modal.remove();
+  }
+};
+
 const toggleModal = () => {
   const route = getPath();
   const modal = document.getElementById("modal");
@@ -91,9 +98,11 @@ document.documentElement.appendChild(keyboardButton);
 
 // Handle all keyboard events
 document.addEventListener("keydown", (event) => {
-  // Keyboard shortcut for home feed
-
   // Common keys
+  if (event.key === "Escape") {
+    closeModal();
+  }
+
   if (event.altKey) {
     switch (event.key) {
       case "h":
